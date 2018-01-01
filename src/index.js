@@ -2,9 +2,6 @@ import { WebGLRenderer, Scene, PerspectiveCamera, PointLight } from 'three';
 import * as THREE from 'three';
 
 import loop from 'raf-loop';
-import WAGNER from '@superguigui/wagner';
-import BloomPass from '@superguigui/wagner/src/passes/bloom/MultiPassBloomPass';
-import FXAAPass from '@superguigui/wagner/src/passes/fxaa/FXAAPass';
 import resize from 'brindille-resize';
 
 import OBJLoader from 'three-obj-loader';
@@ -13,7 +10,6 @@ import WebMidi from 'webmidi';
 
 import Torus from './objects/Torus';
 import OrbitControls from './controls/OrbitControls';
-import { gui } from './utils/debug';
 
 import { analyser1, freq1, bands1 } from './utils/audioFreqs';
 import { analyser2, freq2, bands2 } from './utils/audioFreqs';
@@ -22,11 +18,6 @@ import { analyser3, freq3, bands3 } from './utils/audioFreqs';
 import webMidiControl from './utils/midiControl';
 
 OBJLoader(THREE);
-
-/* Custom settings */
-const SETTINGS = {
-  useComposer: false
-};
 
 // audio stuff
 var subAvg1 = 0,
@@ -63,17 +54,6 @@ renderer.setClearColor(0xffffff, 0.0);
 container.style.overflow = 'hidden';
 container.style.margin = 0;
 container.appendChild(renderer.domElement);
-
-/* Composer for special effects */
-const composer = new WAGNER.Composer(renderer, {
-  useRGBA: true
-});
-
-const bloomPass = new BloomPass({
-  blurAmount: 9000,
-  applyZoomBlur: true
-});
-const fxaaPass = new FXAAPass();
 
 /* Main scene and camera */
 const scene = new Scene();
@@ -155,9 +135,6 @@ resize.addListener(onResize);
 const engine = loop(render);
 engine.start();
 
-/* some stuff with gui */
-gui.add(SETTINGS, 'useComposer');
-
 /* gradien background vars*/
 var mult;
 var angle;
@@ -174,7 +151,6 @@ function onResize() {
   camera.aspect = resize.width / resize.height;
   camera.updateProjectionMatrix();
   renderer.setSize(resize.width, resize.height);
-  composer.setSize(resize.width, resize.height);
 }
 
 function drawParticles(mesh) {
@@ -332,17 +308,5 @@ function render() {
     );
   }
 
-  // for (var j = 5; j < orbs.children.length; j = j + 5) {
-  //   orbs.children[j].scale.set(25 * highAvg1, 25 * highAvg1, 25 * highAvg1);
-  // }
-
-  if (SETTINGS.useComposer) {
-    composer.reset();
-    composer.render(scene, camera);
-    composer.pass(bloomPass);
-    composer.pass(fxaaPass);
-    composer.toScreen();
-  } else {
-    renderer.render(scene, camera);
-  }
+  renderer.render(scene, camera);
 }
