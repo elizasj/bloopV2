@@ -113,7 +113,7 @@ var loader = new THREE.OBJLoader();
 // load a resource
 loader.load(
   // resource URL
-  '/src/objects/earth_obj.obj',
+  'src/objects/earth_obj.obj',
   // called when resource is loaded
   function(object) {
     const objs = [];
@@ -133,7 +133,7 @@ var loader2 = new THREE.OBJLoader();
 // load a resource
 loader2.load(
   // resource URL
-  '/src/objects/model.obj',
+  'src/objects/model.obj',
   // called when resource is loaded
   function(object) {
     const objs = [];
