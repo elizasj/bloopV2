@@ -5,7 +5,7 @@ import average from 'analyser-frequency-average';
 
 // music
 const layer1 = new Audio();
-layer1.src = '/src/static/track1.wav';
+layer1.src = 'src/static/track1.wav';
 const ctx1 = new AudioContext();
 const source1 = ctx1.createMediaElementSource(layer1);
 const analyser1 = ctx1.createAnalyser();
@@ -42,7 +42,7 @@ var bands1 = {
 export { analyser1, freq1, bands1 };
 
 const layer2 = new Audio();
-layer2.src = '/src/static/track2.wav';
+layer2.src = 'src/static/track2.wav';
 const ctx2 = new AudioContext();
 const source2 = ctx2.createMediaElementSource(layer2);
 const analyser2 = ctx2.createAnalyser();
@@ -79,7 +79,7 @@ var bands2 = {
 export { analyser2, freq2, bands2 };
 
 const layer3 = new Audio();
-layer3.src = '/src/static/track3.wav';
+layer3.src = 'src/static/track3.wav';
 const ctx3 = new AudioContext();
 const source3 = ctx3.createMediaElementSource(layer3);
 const analyser3 = ctx3.createAnalyser();
